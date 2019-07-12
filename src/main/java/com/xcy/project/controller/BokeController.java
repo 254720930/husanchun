@@ -2,7 +2,9 @@ package com.xcy.project.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xcy.project.pojo.Boke;
+import com.xcy.project.pojo.Skill;
 import com.xcy.project.service.BokeService;
+import com.xcy.project.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ public class BokeController {
 
     @Autowired
     BokeService bokeService;
+    @Autowired
+    SkillService skillService;
 
     @RequestMapping("showBoke")
     public String showBoke(Model model){
@@ -32,7 +36,9 @@ public class BokeController {
     }
 
     @RequestMapping("addBoke")
-    public String addBoke(){
+    public String addBoke(Model model){
+        List<Skill> skillList = skillService.selectAllSkillType();
+        model.addAttribute("skillList",skillList);
         return "behind/addBoke";
     }
 
