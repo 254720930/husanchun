@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.project.mapper.SpeakerMapper">
+    <select id="selectAllSpeaker" parameterType="speaker" resultType="speaker">
+        select * from speaker
+        <if test="speakerName != null and speakerName !=''">
+            where speakerName like CONCAT('%',#{speakerName},'%')
+        </if>
+    </select>
+
+    <select id="selectSpeakerById" resultType="speaker" parameterType="int">
+        select * from speaker where id = #{id}
+    </select>
+
+    <insert id="insertSpeaker" parameterType="speaker">
+        insert into speaker values (null, #{speakerName}, #{speakerDesc}, #{QQ}, #{wechat}, #{imgUrl}, #{speakerJob})
+    </insert>
+
+    <update id="updateSpeaker" parameterType="speaker">
+        update speaker set speakerName=#{speakerName}, speakerDesc=#{speakerDesc}, QQ=#{QQ}, wechat=#{wechat}, imgurl = #{imgUrl}, speakerJob = #{speakerJob} where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        delete from speaker where id = #{id}
+    </delete>
+
+    <select id="selectAllSpeakerForBefore" resultType="speaker">
+        select * from speaker
+    </select>
+
+</mapper>

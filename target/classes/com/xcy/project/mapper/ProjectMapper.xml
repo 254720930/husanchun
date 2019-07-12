@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.project.mapper.ProjectMapper">
+    <select id="selectAllProject" resultType="project" parameterType="project">
+        select p.*,s.skillType from project p left join skill s on p.skillId = s.id
+        <if test="projectName != null and projectName !=''">
+            where projectName like CONCAT('%',#{projectName},'%')
+        </if>
+    </select>
+
+    <insert id="addProjectById" parameterType="project">
+        insert into project values (null, #{projectName}, #{detail}, #{uploadTime}, #{author}, #{projectBehindUrl}, #{skillId}, #{imageOneUrl}, #{imageTwoUrl}, #{imageThreeUrl}, #{imageFourUrl}, #{imageFiveUrl},#{projectBeforeUrl})
+    </insert>
+
+    <update id="updateProjectById" parameterType="project">
+        update project set projectName = #{projectName}, detail = #{detail}, uploadTime = #{uploadTime}, author = #{author}, projectBeforeUrl = #{projectBeforeUrl},projectBehindUrl=#{projectBehindUrl}, skillId = #{skillId} where id = #{id}
+    </update>
+
+    <select id="selectProjectById" parameterType="int" resultType="project">
+        select p.*,s.skillType from project p left join skill s on p.skillId = s.id where p.id = #{id}
+    </select>
+
+    <delete id="deleteProjectById" parameterType="int">
+        delete from project where id = #{id}
+    </delete>
+
+
+    <select id="selectAllProjectForBefore" resultType="project">
+       select p.*,s.skillType from project p left join skill s on p.skillId = s.id
+    </select>
+
+    <insert id="saveImg" parameterType="project">
+        insert into project (imageOneUrl,imageTwoUrl,imageThreeUrl,imageFourUrl,imageFiveUrl) values (#{imageOneUrl}, #{imageTwoUrl}, #{imageThreeUrl}, #{imageFourUrl}, #{imageFiveUrl})
+    </insert>
+
+</mapper>

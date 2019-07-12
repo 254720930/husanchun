@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.project.mapper.BokeMapper">
+    <resultMap id="bokeMap" type="boke">
+        <id property="id" column="id"/>
+        <result property="bokeTitle" column="bokeTitle"/>
+        <result property="speakerId" column="speakerId"/>
+        <result property="speakerName" column="speakerName"/>
+        <result property="skillId" column="skillId"/>
+        <result property="skillType" column="skillType"/>
+        <result property="bokeInfo" column="bokeInfo"/>
+        <result property="createTime" column="createTime"/>
+        <result property="readNum" column="readNum"/>
+    </resultMap>
+    <sql id="selectSql">
+        select s3.*, s2.speakerName from (select b.*, s.skillType from boke b left join skill s on b.skillId = s.id) s3 left join speaker s2 on s3.speakerId = s2.id
+    </sql>
+
+    <select id="selectAllBokeForBefore" resultMap="bokeMap">
+        <include refid="selectSql"></include>
+    </select>
+
+    <select id="selectBokeById" resultType="Boke" parameterType="int">
+        <include refid="selectSql"/>
+        where s3.id = #{id}
+    </select>
+</mapper>
