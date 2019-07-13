@@ -14,7 +14,7 @@
     <script src="${pageContext.request.contextPath}/js/confirm.js"></script>
 
 
-    <title>讲师</title>
+    <title>博客</title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/cssAndJs/images/icon/favicon.ico">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
@@ -39,7 +39,7 @@
     <script>
         function showDelete(name, id) {
 
-            Confirm.show('溫馨提示', '您确定要刪除[' + name + ']讲师吗？', {
+            Confirm.show('溫馨提示', '您确定要刪除[' + name + ']博客吗？', {
                 '确定': {
                     'primary': true,
                     'callback': function () {
@@ -77,7 +77,7 @@
                             <div class="col-md-11">
                                 <form action="showSpeaker">
                                     <div class="input-group">
-                                        <input type="text" placeholder="请输入讲师名称" name="speakerName"
+                                        <input type="text" placeholder="请输入博客名称" name="speakerName"
                                                class="input-sm form-control "> <span class="input-group-btn">
                                         <input type="submit" class="btn btn-sm btn-primary" value="搜索"/></span>
                                     </div>
