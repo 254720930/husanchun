@@ -18,4 +18,6 @@ public interface BokeService {
     void saveBoke(Boke boke);
 
     void updateBokeById(Boke boke);
+
+    void deleteBokeById(int id);
 }

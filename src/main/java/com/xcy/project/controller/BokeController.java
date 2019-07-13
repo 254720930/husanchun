@@ -1,6 +1,5 @@
 package com.xcy.project.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xcy.project.pojo.Admin;
 import com.xcy.project.pojo.Boke;
 import com.xcy.project.pojo.Skill;
@@ -72,6 +71,13 @@ public class BokeController {
         } else {
             bokeService.updateBokeById(boke);
         }
-        return "success";
+        return "redirect:boke/showBoke";
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public String deleteBokeById(int id){
+        bokeService.deleteBokeById(id);
+        return "redirect:boke/showBoke";
     }
 }

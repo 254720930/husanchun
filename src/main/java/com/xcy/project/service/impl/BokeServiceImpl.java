@@ -35,4 +35,8 @@ public class BokeServiceImpl implements BokeService {
     public void updateBokeById(Boke boke) {
         bokeMapper.updateBokeById(boke);
     }
+
+    public void deleteBokeById(int id) {
+        bokeMapper.deleteBokeById(id);
+    }
 }

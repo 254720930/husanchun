@@ -19,4 +19,6 @@ public interface BokeMapper {
     void saveBoke(Boke boke);
 
     void updateBokeById(Boke boke);
+
+    void deleteBokeById(int id);
 }

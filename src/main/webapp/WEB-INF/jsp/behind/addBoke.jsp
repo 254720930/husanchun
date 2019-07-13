@@ -24,16 +24,12 @@
             } else {
                 var id = 0;
             }
-            alert(id);
 
             var bokeTitle=$("#bokeTitle").val();
-            alert("bokeTitle"+bokeTitle);
             var skillId=$("#skillId").combobox("getValue");
-            alert("${boke.skillId}");
             if (skillId=="" && ${boke.skillId} != 0){
                 skillId = ${boke.skillId};
             }
-            alert(skillId);
             var content=UE.getEditor('editor').getContent();
             var keyWord=$("#keyWord").val();
 
@@ -44,7 +40,7 @@
             }else if(content==null || content==''){
                 alert("请输入内容！");
             }else{
-                $.post("${pageContext.request.contextPath}/boke/saveOrUpdate",{'id':id,'bokeTitle':bokeTitle,'skillId':skillId,'content':content,'bokeInfo':UE.getEditor('editor').getContentTxt(),'bokeSummary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+                $.post("${pageContext.request.contextPath}/boke/saveOrUpdate",{'id':id,'bokeTitle':bokeTitle,'skillId':skillId,'content':content,'bokeInfo':UE.getEditor('editor').getPlainTxt(),'bokeSummary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
                     if(result.success){
                         alert("博客发布成功！");
                         resetValue();
