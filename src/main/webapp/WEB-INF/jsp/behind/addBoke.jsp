@@ -1,62 +1,101 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-    <meta charset=utf-8>
-    <title>写博客</title>
-    <meta name=viewport content="user-scalable=no,width=device-width,initial-scale=1,maximum-scale=1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge，chrome=1">
-    <meta name="csrf_token" content="">
-    <link type="image/x-icon" href="https://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
-    <!--[if lte IE 11]>
-    <meta name='csdn-browser-upgrade'  content='为了获得更好的写作体验，建议更换<a href="https://www.google.cn/chrome/">Chrome</a>或<a href="http://www.firefox.com.cn/">FireFox</a>最新版浏览器'>
-    <![endif]-->
-    <link rel="stylesheet" href="//g.csdnimg.cn/lib/social-share/1.0.1/css/share.min.css" />
-    <link href="https://csdnimg.cn/release/phoenix/mdeditor/css/app-95402bded7.css" rel="stylesheet">
-    <!--[if lte IE 11]>
-    <script src="https://g.csdnimg.cn/browser_upgrade/1.0.2/browser_upgrade.js"></script>
-    <![endif]-->
-    <script type="text/javascript" src="https://g.csdnimg.cn/lib/jquery/1.11.1/jquery.min.js" crossorigin></script>
-    <script src="https://g.csdnimg.cn/track/1.2.6/track.js" type="text/javascript" crossorigin></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>写博客页面</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+
+    <script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+
+        function submitData(){
+            var title=$("#title").val();
+            var blogTypeId=$("#blogTypeId").combobox("getValue");
+            var content=UE.getEditor('editor').getContent();
+            var keyWord=$("#keyWord").val();
+
+            if(title==null || title==''){
+                alert("请输入标题！");
+            }else if(blogTypeId==null || blogTypeId==''){
+                alert("请选择博客类别！");
+            }else if(content==null || content==''){
+                alert("请输入内容！");
+            }else{
+                $.post("${pageContext.request.contextPath}/admin/blog/save.do",{'title':title,'blogType.id':blogTypeId,'content':content,'contentNoTag':UE.getEditor('editor').getContentTxt(),'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+                    if(result.success){
+                        alert("博客发布成功！");
+                        resetValue();
+                    }else{
+                        alert("博客发布失败！");
+                    }
+                },"json");
+            }
+        }
+
+        // 重置数据
+        function resetValue(){
+            $("#title").val("");
+            $("#blogTypeId").combobox("setValue","");
+            UE.getEditor('editor').setContent("");
+            $("#keyWord").val("");
+        }
+
+    </script>
 </head>
-<script>
-    window.user = {
-        avatar: 'https://avatar.csdn.net/8/A/5/3_weixin_45083958.jpg',
-        name: "weixin_45083958",
-        blogurl: 'https://blog.csdn.net/weixin_45083958',
-        isexpert: false,
-        ismuser: false,
-        musername: 'weixin_45083958',
-    };
-    window.editor = {
-        codeTheme: 'prism-atom-one-dark',
-        blogTypes: [{"value":"28","name":"\u4eba\u5de5\u667a\u80fd"},{"value":"1","name":"\u79fb\u52a8\u5f00\u53d1"},{"value":"29","name":"\u7269\u8054\u7f51"},{"value":"15","name":"\u67b6\u6784"},{"value":"2","name":"\u4e91\u8ba1\u7b97\/\u5927\u6570\u636e"},{"value":"17","name":"\u4e92\u8054\u7f51"},{"value":"30","name":"\u6e38\u620f\u5f00\u53d1"},{"value":"12","name":"\u8fd0\u7ef4"},{"value":"6","name":"\u6570\u636e\u5e93"},{"value":"14","name":"\u524d\u7aef"},{"value":"31","name":"\u540e\u7aef"},{"value":"16","name":"\u7f16\u7a0b\u8bed\u8a00"},{"value":"3","name":"\u7814\u53d1\u7ba1\u7406"},{"value":"32","name":"\u5b89\u5168"},{"value":"33","name":"\u7a0b\u5e8f\u4eba\u751f"},{"value":"34","name":"\u533a\u5757\u94fe"},{"value":"35","name":"\u97f3\u89c6\u9891\u5f00\u53d1"},{"value":"36","name":"\u8d44\u8baf"},{"value":"37","name":"\u8ba1\u7b97\u673a\u7406\u8bba\u4e0e\u57fa\u7840"}],
-        categoriesOpts: ["codeMonkey","\u8d70\u7740\u4e0d\u5f52\u8def\u4e0a\u7684java\u7a0b\u5e8f\u733f"],
-        articleId: '',
-        articleStatus: '',
-        use_vip_view: '1',
-        use_fans_view: '1',
-    };
-    window.newUser = false;
-    window.backgroundImg = {
-        id: 1,
-        title: ' 我就是一个不写bug的程序猿，怎么滴~'
-    };
-    window.app_open = {
-        icon:"https://csdnimg.cn/release/phoenix/write/assets/csdnicon-qrcode.png",
-    }
+<body style="margin: 10px">
+<div id="p" class="easyui-panel" title="编写博客" style="padding: 10px">
+    <table cellspacing="20px">
+        <tr>
+            <td width="80px">博客标题：</td>
+            <td><input type="text" id="title" name="title" style="width: 400px;"/></td>
+        </tr>
+        <tr>
+            <td>所属类别：</td>
+            <td>
+                <select class="easyui-combobox" style="width: 154px" id="skillId" name="skillId" editable="false" panelHeight="auto" >
+                    <option value="">请选择博客类别...</option>
+                    <c:forEach var="skill" items="${skillList}">
+                        <option value="${skill.id}">${skill.skillType}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">博客内容：</td>
+            <td>
+                <script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
+            </td>
+        </tr>
+        <tr>
+            <td>关键字：</td>
+            <td><input type="text" id="keyWord" name="keyWord" style="width: 400px;"/>&nbsp;(多个关键字中间用空格隔开)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <a href="javascript:submitData()" class="easyui-linkbutton" data-options="iconCls:'icon-submit'">发布博客</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+
+
 </script>
-<body>
-<div id=app></div>
-<script type="text/javascript" crossorigin src="//g.csdnimg.cn/lib/social-share/1.0.1/js/social-share.min.js"></script>
-<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/production/qrcode-7c90a92189.min.js"></script>
-
-<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/mdeditor/js/manifest-8fc837b1cb.js"></script>
-<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/mdeditor/js/vendor-894f878659.js"></script>
-<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/mdeditor/js/app-f3527baba4.js"></script>
 </body>
-
 </html>
