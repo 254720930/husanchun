@@ -27,4 +27,12 @@ public class BokeServiceImpl implements BokeService {
     public Boke selectBokeById(int id) {
         return bokeMapper.selectBokeById(id);
     }
+
+    public void saveBoke(Boke boke) {
+        bokeMapper.saveBoke(boke);
+    }
+
+    public void updateBokeById(Boke boke) {
+        bokeMapper.updateBokeById(boke);
+    }
 }

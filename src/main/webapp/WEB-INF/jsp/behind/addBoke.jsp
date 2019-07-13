@@ -19,19 +19,20 @@
     <script type="text/javascript">
 
         function submitData(){
-            var title=$("#title").val();
-            var blogTypeId=$("#blogTypeId").combobox("getValue");
+            var bokeTitle=$("#bokeTitle").val();
+            alert("bokeTitle"+bokeTitle);
+            var skillId=$("#skillId").combobox("getValue");
             var content=UE.getEditor('editor').getContent();
             var keyWord=$("#keyWord").val();
 
-            if(title==null || title==''){
+            if(bokeTitle==null || bokeTitle==''){
                 alert("请输入标题！");
-            }else if(blogTypeId==null || blogTypeId==''){
+            }else if(skillId==null || skillId==''){
                 alert("请选择博客类别！");
             }else if(content==null || content==''){
                 alert("请输入内容！");
             }else{
-                $.post("${pageContext.request.contextPath}/admin/blog/save.do",{'title':title,'blogType.id':blogTypeId,'content':content,'contentNoTag':UE.getEditor('editor').getContentTxt(),'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+                $.post("${pageContext.request.contextPath}/boke/saveOrUpdate",{'bokeTitle':bokeTitle,'skillId':skillId,'content':content,'bokeInfo':UE.getEditor('editor').getContentTxt(),'bokeSummary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
                     if(result.success){
                         alert("博客发布成功！");
                         resetValue();
@@ -44,7 +45,7 @@
 
         // 重置数据
         function resetValue(){
-            $("#title").val("");
+            $("#bokeTitle").val("");
             $("#blogTypeId").combobox("setValue","");
             UE.getEditor('editor').setContent("");
             $("#keyWord").val("");
@@ -57,7 +58,7 @@
     <table cellspacing="20px">
         <tr>
             <td width="80px">博客标题：</td>
-            <td><input type="text" id="title" name="title" style="width: 400px;"/></td>
+            <td><input type="text" id="bokeTitle" name="bokeTitle" style="width: 400px;"/></td>
         </tr>
         <tr>
             <td>所属类别：</td>

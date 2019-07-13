@@ -5,14 +5,14 @@ public class Admin {
   private String password;
   private int id;
   private String adminRole;
-  private String headImgUrl;
+  private int speakerId;
 
-  public String getHeadImgUrl() {
-    return headImgUrl;
+  public int getSpeakerId() {
+    return speakerId;
   }
 
-  public void setHeadImgUrl(String headImgUrl) {
-    this.headImgUrl = headImgUrl;
+  public void setSpeakerId(int speakerId) {
+    this.speakerId = speakerId;
   }
 
   public String getAdminRole() {

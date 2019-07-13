@@ -32,13 +32,13 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <c:if test="${empty admin.headImgUrl}">
+                        <c:if test="${empty headImg}">
                             <span><img alt="image" class="img-circle"
                                    src="${pageContext.request.contextPath}/img/yang.jpg"/></span>
                         </c:if>
-                        <c:if test="${not empty admin.headImgUrl}">
+                        <c:if test="${not empty headImg}">
                             <span><img alt="image" class="img-circle"
-                                       src="${admin.headImgUrl}"/></span>
+                                       src="${headImg}"/></span>
                         </c:if>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">

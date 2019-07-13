@@ -13,10 +13,18 @@
         <result property="bokeInfo" column="bokeInfo"/>
         <result property="createTime" column="createTime"/>
         <result property="readNum" column="readNum"/>
+        <result property="bokeSummary" column="bokeSummary"/>
+        <result property="keyWord" column="keyWord"/>
     </resultMap>
     <sql id="selectSql">
         select s3.*, s2.speakerName from (select b.*, s.skillType from boke b left join skill s on b.skillId = s.id) s3 left join speaker s2 on s3.speakerId = s2.id
     </sql>
+    <update id="updateBokeById" parameterType="Boke">
+        update boke set bokeTitle = #{bokeTitle},speakerId = #{speakerId},skillId = #{skillId},bokeSummary=#{bokeSummary},boleInfo=#{bokeInfo},createTime=new(),keyWord=#{keyWord} where id =#{id0}
+    </update>
+    <insert id="saveBoke" parameterType="Boke">
+        insert into boke values (null,#{bokeTitle},#{skillId},#{speakerId},#{bokeSummary},#{bokeInfo},now(),0,#{keyWord})
+    </insert>
 
     <select id="selectAllBokeForBefore" resultMap="bokeMap">
         <include refid="selectSql"></include>

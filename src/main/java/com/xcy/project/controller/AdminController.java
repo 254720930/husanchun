@@ -1,7 +1,9 @@
 package com.xcy.project.controller;
 
 import com.xcy.project.pojo.Admin;
+import com.xcy.project.pojo.Speaker;
 import com.xcy.project.service.AdminService;
+import com.xcy.project.service.SpeakerService;
 import com.xcy.project.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpSession;
 public class AdminController {
 
   @Autowired AdminService adminService;
+  @Autowired
+  SpeakerService speakerService;
 
   @RequestMapping("/validateEmail")
   @ResponseBody
@@ -65,6 +69,8 @@ public class AdminController {
   public String index(HttpSession session, Model model) {
     Object email = session.getAttribute("admin");
     Admin admin = adminService.selectByEmail(email);
+    Speaker speaker = speakerService.selectSpeakerById(admin.getSpeakerId());
+    model.addAttribute("headImg",speaker.getImgUrl());
     model.addAttribute("admin", admin);
     return "behind/index";
   }

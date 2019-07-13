@@ -14,4 +14,8 @@ public interface BokeService {
     List<Boke> selectAllBokeForBefore();
 
     Boke selectBokeById(int id);
+
+    void saveBoke(Boke boke);
+
+    void updateBokeById(Boke boke);
 }

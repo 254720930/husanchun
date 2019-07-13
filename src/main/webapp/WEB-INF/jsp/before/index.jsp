@@ -213,11 +213,11 @@
                     </div> -->
                     <div class="media-body text-left">
                         <h4 class="media-heading">${boke.bokeTitle}</h4>
-                        <p>${boke.bokeInfo}</p>
+                        <p>${boke.bokeSummary}</p>
                         <span class="tianjia">${boke.speakerName}</span>
                         <span class="tianjia">${boke.readNum}</span>
                         <span class="tianjia">${boke.createTime}</span>
-                        <span class="tianjia">评论</span>
+                        <span class="tianjia">${boke.keyWord}</span>
                     </div>
 
                 </div>

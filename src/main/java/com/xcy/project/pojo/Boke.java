@@ -16,6 +16,24 @@ public class Boke {
     private String bokeInfo;
     private int readNum;
     private String createTime;
+    private String bokeSummary;
+    private String keyWord;
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public String getBokeSummary() {
+        return bokeSummary;
+    }
+
+    public void setBokeSummary(String bokeSummary) {
+        this.bokeSummary = bokeSummary;
+    }
 
     public int getReadNum() {
         return readNum;
@@ -98,9 +116,10 @@ public class Boke {
                 ", skillType='" + skillType + '\'' +
                 ", speakerId=" + speakerId +
                 ", speakerName='" + speakerName + '\'' +
-                ", bokeInfo='" + bokeInfo + '\'' +
+                ", bokeSummary='" + bokeSummary + '\'' +
                 ", readNum=" + readNum +
                 ", createTime='" + createTime + '\'' +
+                ", keyword='" + keyWord + '\'' +
                 '}';
     }
 }
