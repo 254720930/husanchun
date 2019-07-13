@@ -19,9 +19,21 @@
     <script type="text/javascript">
 
         function submitData(){
+            if (0 != ${boke.id}){
+                var id = ${boke.id};
+            } else {
+                var id = 0;
+            }
+            alert(id);
+
             var bokeTitle=$("#bokeTitle").val();
             alert("bokeTitle"+bokeTitle);
             var skillId=$("#skillId").combobox("getValue");
+            alert("${boke.skillId}");
+            if (skillId=="" && ${boke.skillId} != 0){
+                skillId = ${boke.skillId};
+            }
+            alert(skillId);
             var content=UE.getEditor('editor').getContent();
             var keyWord=$("#keyWord").val();
 
@@ -32,7 +44,7 @@
             }else if(content==null || content==''){
                 alert("请输入内容！");
             }else{
-                $.post("${pageContext.request.contextPath}/boke/saveOrUpdate",{'bokeTitle':bokeTitle,'skillId':skillId,'content':content,'bokeInfo':UE.getEditor('editor').getContentTxt(),'bokeSummary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+                $.post("${pageContext.request.contextPath}/boke/saveOrUpdate",{'id':id,'bokeTitle':bokeTitle,'skillId':skillId,'content':content,'bokeInfo':UE.getEditor('editor').getContentTxt(),'bokeSummary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
                     if(result.success){
                         alert("博客发布成功！");
                         resetValue();
@@ -46,7 +58,7 @@
         // 重置数据
         function resetValue(){
             $("#bokeTitle").val("");
-            $("#blogTypeId").combobox("setValue","");
+            $("#skillId").combobox("setValue","");
             UE.getEditor('editor').setContent("");
             $("#keyWord").val("");
         }
@@ -58,13 +70,18 @@
     <table cellspacing="20px">
         <tr>
             <td width="80px">博客标题：</td>
-            <td><input type="text" id="bokeTitle" name="bokeTitle" style="width: 400px;"/></td>
+            <td><input type="text" value="${boke.bokeTitle}" id="bokeTitle" name="bokeTitle" style="width: 400px;"/></td>
         </tr>
         <tr>
             <td>所属类别：</td>
             <td>
-                <select class="easyui-combobox" style="width: 154px" id="skillId" name="skillId" editable="false" panelHeight="auto" >
+                <select class="easyui-combobox" style="width: 154px" id="skillId" name="skillId" editable="false" panelHeight="auto" value="${boke.skillId}">
+                    <c:if test="${empty boke.skillType}">
                     <option value="">请选择博客类别...</option>
+                    </c:if>
+                    <c:if test="${not empty boke.skillType}">
+                    <option value="${skill.id}">${boke.skillType}</option>
+                    </c:if>
                     <c:forEach var="skill" items="${skillList}">
                         <option value="${skill.id}">${skill.skillType}</option>
                     </c:forEach>
@@ -74,12 +91,20 @@
         <tr>
             <td valign="top">博客内容：</td>
             <td>
-                <script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
+                <c:if test="${empty boke.id}">
+                    <script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
+                </c:if>
+                <c:if test="${not empty boke.id}">
+                    <script id="editor" type="text/plain" style="width:100%;height:500px;">
+                         ${boke.bokeInfo}
+                    </script>
+
+                </c:if>
             </td>
         </tr>
         <tr>
             <td>关键字：</td>
-            <td><input type="text" id="keyWord" name="keyWord" style="width: 400px;"/>&nbsp;(多个关键字中间用空格隔开)</td>
+            <td><input value="${boke.keyWord}" type="text" id="keyWord" name="keyWord" style="width: 400px;"/>&nbsp;(多个关键字中间用空格隔开)</td>
         </tr>
         <tr>
             <td></td>

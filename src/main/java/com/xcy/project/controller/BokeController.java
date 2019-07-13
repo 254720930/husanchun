@@ -43,7 +43,9 @@ public class BokeController {
 
     @RequestMapping("addBoke")
     public String addBoke(Model model){
+        Boke boke = new Boke();
         List<Skill> skillList = skillService.selectAllSkillType();
+        model.addAttribute("boke",boke);
         model.addAttribute("skillList",skillList);
         return "behind/addBoke";
     }
@@ -51,6 +53,9 @@ public class BokeController {
     @RequestMapping("edit")
     public String editById(int id, Model model){
         Boke boke = bokeService.selectBokeById(id);
+        System.out.println(boke);
+        List<Skill> skillList = skillService.selectAllSkillType();
+        model.addAttribute("skillList",skillList);
         model.addAttribute("boke",boke);
         return "behind/addBoke";
     }
